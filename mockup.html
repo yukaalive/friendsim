@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FriendSim MBTI シミュレーション モック</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+  <main class="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8" data-testid="friendsim-page">
+    <header class="mb-6 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 p-6 text-white shadow-lg" data-testid="app-hero">
+      <p class="text-sm font-semibold tracking-wide text-indigo-100">友達コレクション風 MBTI 関係性シミュレーション</p>
+      <h1 class="mt-2 text-3xl font-bold sm:text-4xl">FriendSim</h1>
+      <p class="mt-3 max-w-3xl text-sm text-white sm:text-base">友達を登録し、学校や会社で起きるイベントを実行。MBTI の傾向に応じた会話と行動で、関係値が仲良しにも喧嘩気味にも変化します。</p>
+    </header>
+
+    <!-- ===== Default State ===== -->
+    <section class="grid gap-4 lg:grid-cols-[360px_1fr]" data-testid="default-state">
+      <div class="space-y-4">
+        <section class="rounded-2xl bg-white p-5 shadow-sm" data-testid="friend-form-card">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-bold">友達登録</h2>
+            <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">AC-001</span>
+          </div>
+          <label class="block text-sm font-semibold text-slate-700" for="friend-name">名前</label>
+          <input id="friend-name" data-testid="friend-name-input" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" placeholder="例: みか" value="みか" />
+          <label class="mt-4 block text-sm font-semibold text-slate-700" for="mbti-select">MBTI</label>
+          <select id="mbti-select" data-testid="mbti-select" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            <option>ENFP</option><option>INTJ</option><option>ISFJ</option><option>ESTP</option>
+          </select>
+          <button data-testid="add-friend-button" class="mt-5 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">友達を登録する</button>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm" data-testid="situation-card">
+          <h2 class="text-lg font-bold">シチュエーション</h2>
+          <div class="mt-4 grid grid-cols-2 gap-3" data-testid="situation-options">
+            <button data-testid="situation-school" class="rounded-xl border-2 border-indigo-500 bg-indigo-50 p-4 text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><span class="block text-lg">🏫</span><span class="font-semibold">学校</span><span class="block text-xs text-slate-600">放課後の教室</span></button>
+            <button data-testid="situation-work" class="rounded-xl border border-slate-200 bg-white p-4 text-left hover:bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><span class="block text-lg">🏢</span><span class="font-semibold">会社</span><span class="block text-xs text-slate-600">会議前の雑談</span></button>
+          </div>
+          <button data-testid="run-event-button" class="mt-4 w-full rounded-xl bg-emerald-500 px-4 py-3 font-semibold text-white hover:bg-emerald-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">イベントを発生させる</button>
+        </section>
+      </div>
+
+      <div class="space-y-4">
+        <section class="rounded-2xl bg-white p-5 shadow-sm" data-testid="friend-list-card">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold">友達一覧</h2>
+            <button data-testid="reset-button" class="text-sm font-semibold text-slate-500 underline focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">リセット</button>
+          </div>
+          <div class="mt-4 grid gap-3 sm:grid-cols-3" data-testid="friend-list">
+            <article class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4" data-testid="friend-card-mika"><div class="flex items-center justify-between"><h3 class="font-bold">みか</h3><span class="rounded-full bg-white px-2 py-1 text-xs font-bold text-indigo-600">ENFP</span></div><p class="mt-2 text-sm text-slate-600">関係値 <span data-testid="relationship-score-mika" class="font-bold text-emerald-700">82</span></p><p data-testid="relationship-status-mika" class="mt-2 rounded-full bg-emerald-600 px-3 py-1 text-center text-xs font-bold text-white">仲良し</p></article>
+            <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4" data-testid="friend-card-ren"><div class="flex items-center justify-between"><h3 class="font-bold">れん</h3><span class="rounded-full bg-white px-2 py-1 text-xs font-bold text-indigo-600">INTJ</span></div><p class="mt-2 text-sm text-slate-600">関係値 <span data-testid="relationship-score-ren" class="font-bold">53</span></p><p data-testid="relationship-status-ren" class="mt-2 rounded-full bg-slate-600 px-3 py-1 text-center text-xs font-bold text-white">普通</p></article>
+            <article class="rounded-2xl border border-rose-200 bg-rose-50 p-4" data-testid="friend-card-ao"><div class="flex items-center justify-between"><h3 class="font-bold">あお</h3><span class="rounded-full bg-white px-2 py-1 text-xs font-bold text-indigo-600">ESTP</span></div><p class="mt-2 text-sm text-slate-600">関係値 <span data-testid="relationship-score-ao" class="font-bold text-rose-700">24</span></p><p data-testid="relationship-status-ao" class="mt-2 rounded-full bg-rose-600 px-3 py-1 text-center text-xs font-bold text-white">喧嘩気味</p></article>
+          </div>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm" data-testid="event-result-card">
+          <h2 class="text-lg font-bold">最新イベント</h2>
+          <div class="mt-4 rounded-2xl border border-indigo-100 bg-indigo-50 p-4" data-testid="event-result">
+            <p class="text-sm font-semibold text-indigo-700">学校 / 放課後の教室</p>
+            <p class="mt-2 text-slate-800">みか（E/F）は「みんなで文化祭の企画を広げよう！」と場を盛り上げ、れん（I/T）は実現手順を冷静に整理した。</p>
+            <p data-testid="relationship-delta" class="mt-3 text-sm font-bold text-emerald-700">みか ↔ れん の関係値 +7</p>
+          </div>
+        </section>
+
+        <section class="rounded-2xl bg-white p-5 shadow-sm" data-testid="event-log-card">
+          <h2 class="text-lg font-bold">イベントログ</h2>
+          <ol class="mt-4 space-y-3" data-testid="event-log-list">
+            <li class="rounded-xl bg-slate-50 p-3 text-sm">会社: あおが即断で進めようとして、れんがリスクを指摘。関係値 -6。</li>
+            <li class="rounded-xl bg-slate-50 p-3 text-sm">学校: みかが全員を誘い、会話が弾んだ。関係値 +5。</li>
+          </ol>
+        </section>
+      </div>
+    </section>
+
+    <!-- ===== Empty / Error / Disabled / Loading States ===== -->
+    <section class="mt-8 grid gap-4 lg:grid-cols-2" data-testid="state-variations">
+      <div class="rounded-2xl bg-white p-5 shadow-sm" data-testid="empty-state"><h2 class="text-sm font-bold text-slate-500">[Empty] 友達0件</h2><p class="mt-3 rounded-xl bg-amber-50 p-4 text-sm text-amber-800" data-testid="empty-guidance">まずは友達を2人以上登録すると、シチュエーションイベントを遊べます。</p></div>
+      <div class="rounded-2xl bg-white p-5 shadow-sm" data-testid="error-state"><h2 class="text-sm font-bold text-slate-500">[Error] 入力不正</h2><p class="mt-3 rounded-xl bg-rose-50 p-4 text-sm text-rose-700" data-testid="name-error">名前を入力し、MBTIを1つ選んでください。</p></div>
+      <div class="rounded-2xl bg-white p-5 shadow-sm" data-testid="disabled-state"><h2 class="text-sm font-bold text-slate-500">[Disabled] 友達不足</h2><button disabled data-testid="run-event-disabled-button" class="mt-3 w-full rounded-xl bg-slate-300 px-4 py-3 font-semibold text-white">イベントには友達が2人必要です</button></div>
+      <div class="rounded-2xl bg-white p-5 shadow-sm" data-testid="loading-state"><h2 class="text-sm font-bold text-slate-500">[Loading] localStorage 復元中</h2><div class="mt-3 flex items-center gap-3 rounded-xl bg-sky-50 p-4 text-sm text-sky-700" data-testid="loading-message"><span class="h-4 w-4 animate-spin rounded-full border-2 border-sky-600 border-t-transparent"></span>保存された友達データを読み込んでいます…</div></div>
+    </section>
+  </main>
+</body>
+</html>
