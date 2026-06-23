@@ -180,6 +180,21 @@ function App() {
                 <strong className={latestLog.delta >= 0 ? 'delta plus' : 'delta minus'} data-testid="relationship-delta">
                   関係値 {latestLog.delta >= 0 ? '+' : ''}{latestLog.delta}
                 </strong>
+                {latestLog.compatibility && (
+                  <div className="compatibility-detail" data-testid="compatibility-detail">
+                    <p><strong>詳細相性スコア:</strong> {latestLog.compatibility.score} / 関係値補正 {latestLog.delta >= 0 ? '+' : ''}{latestLog.delta}</p>
+                    <ul>
+                      {latestLog.compatibility.reasons.map((reason) => <li key={reason}>{reason}</li>)}
+                    </ul>
+                    <div className="axis-grid">
+                      {latestLog.compatibility.axisBreakdown.map((axis) => (
+                        <span key={axis.label} className={axis.score >= 0 ? 'axis positive' : 'axis negative'}>
+                          {axis.label}: {axis.score >= 0 ? '+' : ''}{axis.score}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </>
             ) : (
               <p className="guidance">シチュエーションを選んでイベントを起こすと、MBTIらしい会話と関係値変化が表示されます。</p>

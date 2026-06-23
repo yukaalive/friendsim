@@ -5,6 +5,7 @@ import {
   axisLine,
   clamp,
   generateEvent,
+  mbtiCompatibility,
   relationshipLabel,
   safeLoadState,
 } from './simulation.js';
@@ -69,15 +70,16 @@ describe('FriendSim simulation utilities', () => {
 
     expect(event).toMatchObject({
       id: 'event-1',
-      title: '会社で距離が近づいた',
-      delta: 8,
+      title: '会社で補完関係',
+      delta: 4,
       friendIds: ['a', 'b'],
       createdAt: '2026/06/22 12:00',
     });
     expect(event.message).toContain('会議前に企画の進め方を相談する');
     expect(event.message).toContain('あおいは皆を巻き込んで明るく提案した。');
     expect(event.message).toContain('相手の気持ちを優先して、やわらかい言葉を選ぶ。');
-    expect(event.message).toContain('価値観が重なり会話が弾んだ。');
+    expect(event.message).toContain('相性判定は「補完関係」');
+    expect(event.message).toContain('関係値がプラスに動いた。');
   });
 
   it('generates a conflict event when decision and planning axes differ', () => {
@@ -92,11 +94,31 @@ describe('FriendSim simulation utilities', () => {
       formatDate: () => 'now',
     });
 
-    expect(event.title).toBe('カフェで少しぶつかった');
-    expect(event.delta).toBe(-6);
+    expect(event.title).toBe('カフェですれ違い注意');
+    expect(event.delta).toBe(-5);
     expect(event.message).toContain('休日に近況を話しながら作戦会議する');
     expect(event.message).toContain('れんは少し考えてから落ち着いて意見を出した。');
-    expect(event.message).toContain('優先したいものが違って、少し言い合いになった。');
+    expect(event.message).toContain('相性判定は「すれ違い注意」');
+    expect(event.message).toContain('関係値がマイナスに動いた。');
+  });
+
+
+  it('calculates detailed MBTI compatibility levels and deltas', () => {
+    expect(mbtiCompatibility('ENFP', 'INFJ')).toMatchObject({
+      delta: 15,
+      level: '最高相性',
+    });
+    expect(mbtiCompatibility('INTJ', 'ESFP')).toMatchObject({
+      delta: -5,
+      level: 'すれ違い注意',
+    });
+    expect(mbtiCompatibility('ISTJ', 'ESTP')).toMatchObject({
+      delta: 13,
+      level: '最高相性',
+    });
+    const detailed = mbtiCompatibility('ENFP', 'INFJ');
+    expect(detailed.axisBreakdown).toHaveLength(4);
+    expect(detailed.reasons.join(' ')).toContain('E/I エネルギー配分');
   });
 
   it('exposes distinct MBTI axis lines for E/I, T/F, J/P, and S/N behavior', () => {
